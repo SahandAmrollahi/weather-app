@@ -27,7 +27,9 @@ const Profile: React.FC = () => {
   };
   useEffect(() => {
     const theme = window.localStorage.getItem("theme") || "";
-    document.body.classList.add(theme);
+    if (theme) {
+      document.body.classList.add(theme);
+    }
   }, []);
 
   return (

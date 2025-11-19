@@ -77,7 +77,9 @@ const Weather: React.FC = () => {
       const data: City[] = await res.json();
       setCities(data);
       const theme = window.localStorage.getItem("theme") || "";
-      document.body.classList.add(theme);
+      if (theme) {
+        document.body.classList.add(theme);
+      }
     })();
   }, []);
 

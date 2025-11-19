@@ -55,7 +55,9 @@ const TodoList: React.FC = () => {
   };
   useEffect(() => {
     const theme = window.localStorage.getItem("theme") || "";
-    document.body.classList.add(theme);
+    if (theme) {
+      document.body.classList.add(theme);
+    }
   }, []);
 
   return (
@@ -111,7 +113,7 @@ const TodoList: React.FC = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
-                minWidth: 90, 
+                minWidth: 90,
                 justifyContent: "flex-end",
               }}
             >
