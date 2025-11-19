@@ -29,7 +29,7 @@ const Home: React.FC = () => {
       )}
       <div className="w-full h-full bg-[#AAC4F5] dark:bg-[#44475A] text-white p-4 flex flex-col justify-center items-center gap-3">
         <h1 className="text-[50px] text-[#F8F8F2]">
-          {t("welcome")} {userName} 🙂
+          welcome to app {userName} 🙂
         </h1>
       </div>
     </>

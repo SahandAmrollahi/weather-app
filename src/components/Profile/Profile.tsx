@@ -91,7 +91,7 @@ const Profile: React.FC = () => {
           </ul>
         </div>
         {/* language */}
-        <div className="dropdown dropdown-center">
+        {/* <div className="dropdown dropdown-center">
           <div
             tabIndex={0}
             role="button"
@@ -110,7 +110,7 @@ const Profile: React.FC = () => {
               <a className="block text-center">persion</a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
