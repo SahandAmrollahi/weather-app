@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: font-english;
+  src: url("../src/fonts/QuerolasDemo-Regular.otf");
+}
+* {
+  font-family: font-english;
+}
