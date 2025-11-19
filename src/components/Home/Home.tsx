@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Home: React.FC = () => {
   const [userName, setUserName] = useState<string>("");
   const [showNotice, setShowNotice] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const storedName = window.localStorage.getItem("userName");
@@ -16,13 +18,6 @@ const Home: React.FC = () => {
       }, 3000);
     }
   }, []);
-  useEffect(() => {
-    const theme = window.localStorage.getItem("theme") || "";
-    if (theme) {
-      document.body.classList.add(theme);
-    }
-  }, []);
-
   return (
     <>
       {showNotice && (
@@ -34,7 +29,7 @@ const Home: React.FC = () => {
       )}
       <div className="w-full h-full bg-[#AAC4F5] dark:bg-[#44475A] text-white p-4 flex flex-col justify-center items-center gap-3">
         <h1 className="text-[50px] text-[#F8F8F2]">
-          Welcome to app {userName} 🙂
+          {t("welcome")} {userName} 🙂
         </h1>
       </div>
     </>

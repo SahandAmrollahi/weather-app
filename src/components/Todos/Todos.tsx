@@ -53,12 +53,6 @@ const TodoList: React.FC = () => {
     setEditingId(null);
     setEditingText("");
   };
-  useEffect(() => {
-    const theme = window.localStorage.getItem("theme") || "";
-    if (theme) {
-      document.body.classList.add(theme);
-    }
-  }, []);
 
   return (
     <div className="w-full h-full flex justify-center items-center dark:bg-[#44475A] bg-[#AAC4F5]">

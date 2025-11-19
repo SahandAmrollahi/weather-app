@@ -76,10 +76,6 @@ const Weather: React.FC = () => {
       const res = await fetch("http://localhost:3004/city");
       const data: City[] = await res.json();
       setCities(data);
-      const theme = window.localStorage.getItem("theme") || "";
-      if (theme) {
-        document.body.classList.add(theme);
-      }
     })();
   }, []);
 

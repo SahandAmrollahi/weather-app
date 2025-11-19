@@ -4,9 +4,18 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: font-english;
-  src: url("../src/fonts/QuerolasDemo-Regular.otf");
+  font-family: font-english1;
+  src: url("../src/fonts/DentraDemo-Regular.otf");
 }
-* {
-  font-family: font-english;
+
+@font-face {
+  font-family: font-farsi;
+  src: url("../src/fonts/Vazir.ttf");
+}
+body {
+  font-family: font-english1;
+}
+
+body.lang-fa {
+  font-family: font-farsi;
 }

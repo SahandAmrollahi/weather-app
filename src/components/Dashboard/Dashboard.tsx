@@ -26,13 +26,6 @@ const Dashboard: React.FC = () => {
     }
     setGreeting(msg);
   }, []);
-  useEffect(() => {
-    const theme = window.localStorage.getItem("theme") || "";
-    if (theme) {
-      document.body.classList.add(theme);
-    }
-  }, []);
-
   return (
     <div className="flex flex-col justify-center items-center w-full h-full dark:bg-[#44475A] bg-[#AAC4F5] dark:text-white p-4 gap-4">
       <p style={{ color: "#F8F8F2" }} className={`text-[50px]`}>

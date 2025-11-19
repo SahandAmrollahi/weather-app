@@ -6,8 +6,21 @@ import Profile from "./components/Profile/Profile";
 import Menu from "./components/Menu/Menu";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
+import { useEffect } from "react";
 
 const App = () => {
+  useEffect(() => {
+    const theme = window.localStorage.getItem("theme") || "";
+    if (theme) {
+      document.body.classList.add(theme);
+    }
+    const language = window.localStorage.getItem("language");
+    if (language === "persion") {
+      document.body.classList.add("lang-fa");
+    } else {
+      document.body.classList.remove("lang-fa");
+    }
+  }, []);
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
