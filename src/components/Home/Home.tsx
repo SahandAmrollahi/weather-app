@@ -19,20 +19,19 @@ const Home: React.FC = () => {
     }
   }, []);
   return (
-    <>
+    <div className="w-full h-full relative">
       {showNotice && (
-        <div className="text-lg text-[#8CA9FF] bg-[#FFF8DE] dark:bg-[#FF5555] dark:text-[#F8F8F2] px-3 py-2 rounded-md absolute left-1/2 -translate-x-[65px] top-[100px] font-light">
-          <span className="font-light">
-            Please enter your name on the profile page.
-          </span>
+        <div className="text-lg text-[#8CA9FF] bg-[#FFF8DE] dark:bg-[#FF5555] dark:text-[#F8F8F2] px-3 py-2 rounded-md absolute  left-[50%] -translate-x-1/2 top-[50px] font-light">
+          <span className="font-light">{t("home.notification")}</span>
         </div>
       )}
       <div className="w-full h-full bg-[#AAC4F5] dark:bg-[#44475A] text-white p-4 flex flex-col justify-center items-center gap-3">
         <h1 className="text-[50px] text-[#F8F8F2]">
-          welcome to app {userName} 🙂
+          {t("home.welcome")} {userName}
         </h1>
+        <span className="text-[50px]">🙂</span>
       </div>
-    </>
+    </div>
   );
 };
 

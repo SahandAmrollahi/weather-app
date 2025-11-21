@@ -7,18 +7,29 @@ import Menu from "./components/Menu/Menu";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const App = () => {
+  const { i18n } = useTranslation();
+
   useEffect(() => {
     const theme = window.localStorage.getItem("theme") || "";
     if (theme) {
       document.body.classList.add(theme);
     }
     const language = window.localStorage.getItem("language");
+
     if (language === "persion") {
+      i18n.changeLanguage("fa");
+      document.body.classList.remove("lang-en");
+      document.body.classList.remove("dir-ltr");
       document.body.classList.add("lang-fa");
+      document.body.classList.add("dir-rtl");
     } else {
       document.body.classList.remove("lang-fa");
+      document.body.classList.remove("dir-rtl");
+      document.body.classList.add("lang-en");
+      document.body.classList.add("dir-ltr");
     }
   }, []);
   return (

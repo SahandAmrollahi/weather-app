@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Dashboard: React.FC = () => {
   const [time, setTime] = useState<string>("");
   const [greeting, setGreeting] = useState<string>("");
   const userName = window.localStorage.getItem("userName");
   const username = userName === null ? "" : userName;
+  const { t } = useTranslation();
 
   useEffect(() => {
     const date = new Date();
@@ -16,13 +18,13 @@ const Dashboard: React.FC = () => {
     setTime(`${hoursStr}:${minutesStr}`);
     let msg = "";
     if (hours >= 5 && hours < 12) {
-      msg = `Good Morning ${username} 🌤️`;
+      msg = `${t("dashboard.morning")} ${username} 🌤️`;
     } else if (hours >= 12 && hours < 17) {
-      msg = `Good Afternoon ${username}☀️ `;
+      msg = `${t("dashboard.afternoon")} ${username}☀️ `;
     } else if (hours >= 17 && hours < 21) {
-      msg = `Good Evening ${username} 🌇 `;
+      msg = `${t("dashboard.evening")} ${username} 🌇 `;
     } else {
-      msg = `Good Night ${username}🌙`;
+      msg = `${t("dashboard.night")} ${username}🌙`;
     }
     setGreeting(msg);
   }, []);

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type Todo = {
   id: number;
@@ -11,6 +12,7 @@ const TodoList: React.FC = () => {
     { id: 2, text: "todo #2" },
     { id: 3, text: "todo #3" },
   ]);
+  const { t } = useTranslation();
 
   const [newTodo, setNewTodo] = useState<string>("");
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -56,24 +58,26 @@ const TodoList: React.FC = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center dark:bg-[#44475A] bg-[#AAC4F5]">
-      <div className="mx-auto w-[400px] p-[16px]">
-        <h2 style={{ textAlign: "center", marginBottom: 20 }}>Todo list</h2>
+      <div className="mx-auto w-[400px] p-4 bg-[#8CA9FF] dark:bg-transparent rounded-[10px]">
+        <h2 style={{ textAlign: "center", marginBottom: 20 }}>
+          {t("todo.title")}
+        </h2>
 
         {/* create */}
         <div style={{ display: "flex", marginBottom: 30, gap: 8 }}>
           <input
             type="text"
-            placeholder="New todo ..."
+            placeholder={t("todo.placeholder")}
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             style={{ flex: 1 }}
-            className="pl-[6px] pt-[3px] placeholder:text-white/80 dark:placeholder:text-white/50"
+            className="px-2 py-1 placeholder:text-white/80 dark:placeholder:text-white/50"
           />
           <button
             className="btn btn-sm btn-info text-[#F8F8F2] font-light"
             onClick={handleAdd}
           >
-            Add
+            {t("todo.add")}
           </button>
         </div>
         {/* create */}
@@ -96,7 +100,7 @@ const TodoList: React.FC = () => {
                 style={{ flex: 1, marginRight: 8 }}
                 value={editingText}
                 onChange={(e) => setEditingText(e.target.value)}
-                className="pl-[6px] pt-[3px]"
+                className="pl-1.5 pt-[3px]"
               />
             ) : (
               <span style={{ flex: 1, marginRight: 8 }}>{todo.text}</span>

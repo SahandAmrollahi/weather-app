@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 type City = {
   admin_name: string;
   capital: string;
@@ -48,6 +49,7 @@ const Weather: React.FC = () => {
   const [weather, setWeather] = useState<Weather | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showNotice, setShowNotice] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   console.log(error);
 
@@ -63,7 +65,7 @@ const Weather: React.FC = () => {
       setLatitude(find.lat);
       setLongitude(find.lng);
     } else {
-      setError("The entered city information was not found.");
+      setError(t("weather.notification"));
       setShowNotice(true);
       setTimeout(() => {
         setShowNotice(false);
@@ -95,19 +97,19 @@ const Weather: React.FC = () => {
       <form onSubmit={onSubmit}>
         <div className="card w-96 shadow-sm bg-[#6272A4]">
           {showNotice && (
-            <div className="text-lg text-[#8CA9FF] bg-[#FFF8DE] dark:text-[#F8F8F2] dark:bg-[#FF5555] px-3 py-2 rounded-md absolute left-[85px] -translate-x-[65px] bottom-[375px] w-[340px]">
+            <div className="text-center text-lg text-[#8CA9FF] bg-[#FFF8DE] dark:text-[#F8F8F2] dark:bg-[#FF5555] px-3 py-2 rounded-md absolute left-[85px] -translate-x-[65px] bottom-[375px] w-[340px]">
               <span className="font-light">{error}</span>
             </div>
           )}
 
           <div className="card-body">
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-2">
               <input
-                className="w-[120px] pl-[7px] pt-0.5 border outline-0 text-[15px] rounded-[5px]"
+                className="flex-1 px-1.5 outline-0 text-[15px] rounded-[5px]"
                 type="text"
                 name=""
                 id=""
-                placeholder="city"
+                placeholder={t("weather.placeholder")}
                 onChange={(e) => setNameCity(e.target.value)}
               />
 
@@ -115,45 +117,56 @@ const Weather: React.FC = () => {
                 className="btn btn-sm btn-info text-[15px] font-light text-[#F8F8F2]"
                 type="submit"
               >
-                Check
+                {t("weather.check")}
               </button>
             </div>
 
             <ul className="mt-6 flex flex-col gap-2 text-lg">
               <li>
-                <span className="">temperature</span>
-                <span className="font-bold absolute right-[23px] text-[#FFF8DE] dark:text-[#BD93F9]">
-                  {" "}
-                  {weather?.current_weather?.temperature}
-                </span>
+                <div className="flex justify-between">
+                  <span className="">{t("weather.temperature")}</span>
+                  <span className="font-bold text-[#FFF8DE] dark:text-[#BD93F9]">
+                    {" "}
+                    {weather?.current_weather?.temperature}
+                  </span>
+                </div>
               </li>
               <li>
-                <span className="">windspeed</span>
-                <span className="font-bold absolute right-[23px] text-[#FFF8DE] dark:text-[#BD93F9]">
-                  {" "}
-                  {weather?.current_weather?.windspeed}
-                </span>
+                <div className="flex justify-between">
+                  <span className="">{t("weather.windspeed")}</span>
+                  <span className="font-bold text-[#FFF8DE] dark:text-[#BD93F9]">
+                    {" "}
+                    {weather?.current_weather?.windspeed}
+                  </span>
+                </div>
               </li>
               <li>
-                <span className="">winddirection</span>
-                <span className="font-bold absolute right-[23px] text-[#FFF8DE] dark:text-[#BD93F9]">
+                <div className="flex justify-between">
                   {" "}
-                  {weather?.current_weather?.winddirection}
-                </span>
+                  <span className="">{t("weather.winddirection")}</span>
+                  <span className="font-bold text-[#FFF8DE] dark:text-[#BD93F9]">
+                    {" "}
+                    {weather?.current_weather?.winddirection}
+                  </span>
+                </div>
               </li>
               <li>
-                <span className="">is_day</span>
-                <span className="font-bold absolute right-[23px] text-[#FFF8DE] dark:text-[#BD93F9]">
-                  {" "}
-                  {weather?.current_weather?.is_day}
-                </span>
+                <div className="flex justify-between">
+                  <span className="">{t("weather.is_day")}</span>
+                  <span className="font-bold text-[#FFF8DE] dark:text-[#BD93F9]">
+                    {" "}
+                    {weather?.current_weather?.is_day}
+                  </span>
+                </div>
               </li>
               <li>
-                <span className="">weathercode</span>
-                <span className="font-bold absolute right-[23px] text-[#FFF8DE] dark:text-[#BD93F9]">
-                  {" "}
-                  {weather?.current_weather?.weathercode}
-                </span>
+                <div className="flex justify-between">
+                  <span className="">{t("weather.weathercode")}</span>
+                  <span className="font-bold text-[#FFF8DE] dark:text-[#BD93F9]">
+                    {" "}
+                    {weather?.current_weather?.weathercode}
+                  </span>
+                </div>
               </li>
             </ul>
             <div className="mt-6"></div>

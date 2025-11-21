@@ -4,8 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: font-english1;
-  src: url("../src/fonts/DentraDemo-Regular.otf");
+  font-family: font-english;
+  src: url("../src/fonts/RobotoSlab-Regular.ttf");
 }
 
 @font-face {
@@ -13,9 +13,19 @@
   src: url("../src/fonts/Vazir.ttf");
 }
 body {
-  font-family: font-english1;
+  font-family: font-english;
 }
 
-body.lang-fa {
+.lang-en {
+  font-family: font-english;
+}
+
+.lang-fa {
   font-family: font-farsi;
+}
+.dir-rtl {
+  direction: rtl;
+}
+.dir-ltr {
+  direction: ltr;
 }

@@ -1,7 +1,9 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
-const Menu:React.FC = () => {
+const Menu: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className="w-[250px] flex flex-col gap-2 p-4 text-[#8CA9FF] dark:text-[#F8F8F2] dark:bg-[#6272A4] bg-[#FFF2C6]">
       <NavLink
@@ -14,7 +16,7 @@ const Menu:React.FC = () => {
         }
         to="/dashboard"
       >
-        Dashboard
+        {t("menu.dashboard")}
       </NavLink>
 
       <NavLink
@@ -27,7 +29,7 @@ const Menu:React.FC = () => {
         }
         to="/todos"
       >
-        Todos
+        {t("menu.todos")}
       </NavLink>
       <NavLink
         className={({ isActive }) =>
@@ -39,7 +41,7 @@ const Menu:React.FC = () => {
         }
         to="/weather"
       >
-        Weather
+        {t("menu.weather")}
       </NavLink>
       <NavLink
         className={({ isActive }) =>
@@ -51,7 +53,7 @@ const Menu:React.FC = () => {
         }
         to="/profile"
       >
-        Profile
+        {t("menu.profile")}
       </NavLink>
     </div>
   );
