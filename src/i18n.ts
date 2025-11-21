@@ -9,7 +9,7 @@ i18n.use(initReactI18next).init({
       translation: {
         home: {
           welcome: "خوش اومدی به سایت",
-          notification: ".لطفا نام خود را در صفحه پروفایل وارد کنید",
+          notification: "لطفا نام خود را در صفحه پروفایل وارد کنید.",
         },
         header: {
           header: "برنامه من",
