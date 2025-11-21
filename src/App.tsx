@@ -13,6 +13,7 @@ const App = () => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
+    document.body.classList.add("dark");
     const theme = window.localStorage.getItem("theme") || "";
     if (theme) {
       document.body.classList.add(theme);
