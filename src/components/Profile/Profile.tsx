@@ -1,52 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { setLanguage, setTheme, setUserName } from "../../store/settingsSlice";
 
 const Profile: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [name, setName] = useState<string>("");
-  useEffect(() => {
-    const storedName = window.localStorage.getItem("userName");
-    if (storedName) {
-      setName(storedName);
-    }
-  }, []);
 
   // dark theme
-  const setDarkTheme = () => {
-    window.localStorage.setItem("theme", "dark");
-    document.body.classList.add("dark");
-  };
-
-  // light theme
-  const setLightTheme = () => {
-    document.body.classList.remove("dark");
-    window.localStorage.setItem("theme", "light");
-  };
-
-  // english
-  const setEnglish = () => {
-    i18n.changeLanguage("en");
-    window.localStorage.setItem("language", "english");
-    document.body.classList.remove("lang-fa");
-    document.body.classList.add("lang-en");
-    document.body.classList.remove("dir-rtl");
-    document.body.classList.add("dir-ltr");
-  };
-
-  // persion
-  const setPersion = () => {
-    i18n.changeLanguage("fa");
-    window.localStorage.setItem("language", "persion");
-    document.body.classList.add("lang-fa");
-    document.body.classList.remove("dir-ltr");
-    document.body.classList.add("dir-rtl");
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name) return;
-    window.localStorage.setItem("userName", name);
+    dispatch(setUserName(name));
   };
 
   return (
@@ -89,10 +57,10 @@ const Profile: React.FC = () => {
             tabIndex={-1}
             className="bg-[#FFF8DE] text-[#6272A4] dark:bg-[#282A36] dark:text-[#F8F8F2] dropdown-content menu rounded-box z-1 w-52 p-2 shadow-sm"
           >
-            <li onClick={setDarkTheme}>
+            <li onClick={() => dispatch(setTheme("dark"))}>
               <a className="block text-center">{t("profile.dark")}</a>
             </li>
-            <li onClick={setLightTheme}>
+            <li onClick={() => dispatch(setTheme("light"))}>
               <a className="block text-center">{t("profile.light")}</a>
             </li>
           </ul>
@@ -110,11 +78,11 @@ const Profile: React.FC = () => {
             tabIndex={-1}
             className="bg-[#FFF8DE] text-[#6272A4] dark:bg-[#282A36] dark:text-[#F8F8F2] dropdown-content menu rounded-box z-1 w-52 p-2 shadow-sm"
           >
-            <li onClick={setEnglish}>
+            <li onClick={() => dispatch(setLanguage("en"))}>
               <a className="block text-center">{t("profile.english")}</a>
             </li>
-            <li onClick={setPersion}>
-              <a className="block text-center">{t("profile.persion")}</a>
+            <li onClick={() => dispatch(setLanguage("fa"))}>
+              <a className="block text-center">{t("profile.persian")}</a>
             </li>
           </ul>
         </div>

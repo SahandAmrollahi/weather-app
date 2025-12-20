@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 
 const Dashboard: React.FC = () => {
   const [time, setTime] = useState<string>("");
   const [greeting, setGreeting] = useState<string>("");
-  const userName = window.localStorage.getItem("userName");
+  const { userName } = useSelector(
+    (state: RootState) => state.setting
+  );
   const username = userName === null ? "" : userName;
   const { t } = useTranslation();
 
@@ -27,7 +31,7 @@ const Dashboard: React.FC = () => {
       msg = `${t("dashboard.night")} ${username}🌙`;
     }
     setGreeting(msg);
-  }, []);
+  }, [t]);
   return (
     <div className="flex flex-col justify-center items-center w-full h-full dark:bg-[#44475A] bg-[#AAC4F5] dark:text-white p-4 gap-4">
       <p style={{ color: "#F8F8F2" }} className={`text-[50px]`}>

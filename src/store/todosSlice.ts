@@ -4,7 +4,7 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
-interface Todo {
+export interface Todo {
   id: number;
   todo: string;
   completed: boolean;
@@ -40,7 +40,12 @@ export const createTodo = createAsyncThunk<Todo, string>(
       throw new Error("Failed to create todo");
     }
     const data: Todo = await res.json();
-    return data;
+    return {
+      id: Math.floor(Math.random() * 100),
+      todo: data.todo,
+      completed: false,
+      userId: Math.floor(Math.random() * 100),
+    };
   }
 );
 
@@ -64,27 +69,23 @@ export const completeTodo = createAsyncThunk<Todo, number>(
 );
 
 // Update Todo =>
-export const updateTodo = createAsyncThunk<Todo, { id: number; text: string }>(
-  "todos/updateTodo",
-  async ({ id, text }) => {
-    const res = await fetch(`https://dummyjson.com/todos/${id}`, {
-      method: "PUT",
-      headers: { "Context-Type": "application/json" },
-      body: JSON.stringify({
-        todo: text,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          todo: text,
-        }),
-      }),
-    });
-    if (!res.ok) {
-      throw new Error("Failed to update todo");
-    }
-    const data = await res.json();
-    return data as Todo;
+export const updateTodo = createAsyncThunk<
+  Todo,
+  { editingId: number; trimmed: string }
+>("todos/updateTodo", async ({ editingId, trimmed }) => {
+  const res = await fetch(`https://dummyjson.com/todos/${editingId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      todo: trimmed,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error("Failed to update todo");
   }
-);
+  const data = await res.json();
+  return data as Todo;
+});
 
 // Delete Todo
 export const deleteTodo = createAsyncThunk<number, number>(
@@ -109,19 +110,22 @@ const todosSlice = createSlice({
     builder
       .addCase(createTodo.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(createTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
         state.loading = false;
         state.items.push(action.payload);
       })
-      .addCase(createTodo.rejected, (state, action) => {
-        state.error = action.error.message || "Failed to create todo";
+      .addCase(createTodo.rejected, (state) => {
+        state.loading = false;
+        state.error = "todo.errorCreate";
       });
 
     // Complete
     builder
       .addCase(completeTodo.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(completeTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
         state.loading = false;
@@ -130,14 +134,16 @@ const todosSlice = createSlice({
           todo.completed = true;
         }
       })
-      .addCase(completeTodo.rejected, (state, action) => {
-        state.error = action.error.message || "Failed to complete todo";
+      .addCase(completeTodo.rejected, (state) => {
+        state.loading = false;
+        state.error = "todo.errorComplete";
       });
 
     // Update
     builder
-      .addCase(deleteTodo.pending, (state) => {
+      .addCase(updateTodo.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
         state.loading = false;
@@ -146,21 +152,24 @@ const todosSlice = createSlice({
           item.todo = action.payload.todo;
         }
       })
-      .addCase(updateTodo.rejected, (state, action) => {
-        state.error = action.error.message || "Failed to update todo";
+      .addCase(updateTodo.rejected, (state) => {
+        state.loading = false;
+        state.error = "todo.errorUpdate";
       });
 
     // Delete
     builder
       .addCase(deleteTodo.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(deleteTodo.fulfilled, (state, action: PayloadAction<number>) => {
         state.loading = false;
         state.items = state.items.filter((t) => t.id !== action.payload);
       })
-      .addCase(deleteTodo.rejected, (state, action) => {
-        state.error = action.error.message || "Failed to delete todo";
+      .addCase(deleteTodo.rejected, (state) => {
+        state.loading = false;
+        state.error = "todo.errorDelete";
       });
   },
 });

@@ -8,31 +8,27 @@ import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import type { RootState } from "./store/store";
 
 const App = () => {
+  const { language, theme } = useSelector((state: RootState) => state.setting);
+
+
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    document.body.classList.add("dark");
-    const theme = window.localStorage.getItem("theme") || "";
-    if (theme) {
-      document.body.classList.add(theme);
-    }
-    const language = window.localStorage.getItem("language");
+    document.body.classList.toggle("dark", theme === "dark");
+    document.body.classList.toggle("light", theme === "light");
+  }, [theme]);
+  useEffect(() => {
+    document.body.classList.toggle("lang-fa", language === "fa");
+    document.body.classList.toggle("lang-en", language === "en");
+    document.body.classList.toggle("dir-rtl", language === "fa");
+    document.body.classList.toggle("dir-ltr", language === "en");
+    i18n.changeLanguage(language);
+  }, [language]);
 
-    if (language === "persion") {
-      i18n.changeLanguage("fa");
-      document.body.classList.remove("lang-en");
-      document.body.classList.remove("dir-ltr");
-      document.body.classList.add("lang-fa");
-      document.body.classList.add("dir-rtl");
-    } else {
-      document.body.classList.remove("lang-fa");
-      document.body.classList.remove("dir-rtl");
-      document.body.classList.add("lang-en");
-      document.body.classList.add("dir-ltr");
-    }
-  }, []);
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">

@@ -6,7 +6,6 @@ const Header: React.FC = () => {
   const raw = useLocation().pathname;
   const title = raw.replace("/", "");
   const { t } = useTranslation();
-  console.log(title);
 
   return (
     <header className="h-[50px] flex items-center justify-center text-[#FFF2C6] dark:text-white bg-[#8CA9FF] dark:bg-[#282A36]">
