@@ -1,64 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-type City = {
-  admin_name: string;
-  capital: string;
-  city: string;
-  country: string;
-  id: string;
-  iso2: string;
-  lat: string;
-  lng: string;
-  population: string;
-  population_proper: string;
-};
-type Current_weather_units = {
-  time: string;
-  interval: string;
-  temperature: string;
-  windspeed: string;
-  winddirection: string;
-  is_day: string;
-  weathercode: string;
-};
-type Current_weather = {
-  time: string;
-  interval: number;
-  temperature: number;
-  windspeed: number;
-  winddirection: number;
-  is_day: number;
-  weathercode: number;
-};
-type Weather = {
-  latitude: number;
-  longitude: number;
-  generationtime_ms: number;
-  utc_offset_seconds: number;
-  timezone: string;
-  timezone_abbreviation: string;
-  elevation: number;
-  current_weather_units: Current_weather_units;
-  current_weather: Current_weather;
-};
+import {
+  skipToken,
+  useGetCitiesQuery,
+  useGetWeatherQuery,
+} from "../../store/services/weatherApi";
+import { useSelector } from "react-redux";
 const Weather: React.FC = () => {
-  const [cities, setCities] = useState<City[] | null>(null);
+  const { data: cities = [] } = useGetCitiesQuery();
+
+
   const [nameCity, setNameCity] = useState<string>("");
   const [latitude, setLatitude] = useState<string | null>(null);
   const [longitude, setLongitude] = useState<string | null>(null);
-  const [weather, setWeather] = useState<Weather | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showNotice, setShowNotice] = useState<boolean>(false);
   const { t } = useTranslation();
-
-  console.log(error);
+  const weatherArgs =
+    latitude && longitude ? { latitude, longitude } : skipToken;
+  const { data: weather } = useGetWeatherQuery(weatherArgs);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!cities) return;
 
     const find = cities.find(
-      (c) => c.city.toLowerCase() === nameCity.toLowerCase()
+      (c) => c.city.toLowerCase() === nameCity.trim().toLowerCase()
     );
 
     if (find) {
@@ -73,24 +39,7 @@ const Weather: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch("http://localhost:3004/city");
-      const data: City[] = await res.json();
-      setCities(data);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
-      );
-      const data: Weather = await res.json();
-      console.log(data);
-      setWeather(data);
-    })();
-  }, [latitude, longitude]);
+  console.log(useSelector((state) => state));
 
   return (
     <div className="flex justify-center items-center w-full h-full bg-[#AAC4F5] dark:bg-[#44475A] dark:text-[#F8F8F2]">

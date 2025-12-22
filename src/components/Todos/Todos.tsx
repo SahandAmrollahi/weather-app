@@ -52,8 +52,8 @@ const TodoList = () => {
   };
 
   return (
-    <section className="dark:bg-[#44475A] bg-[#AAC4F5] px-28">
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
+    <section className="w-full h-full dark:bg-[#44475A] bg-[#AAC4F5] px-28">
+      <div className="max-w-4xl mx-auto px-4 py-16 space-y-6">
         {/* Add Item */}
         <div className="dark:bg-[#6272A4] bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-start gap-4 mb-6">
@@ -72,7 +72,7 @@ const TodoList = () => {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && addTodo()}
-                className="w-full border-b-2 border-blue-400 pb-2 text-gray-700 outline-none placeholder-gray-400"
+                className="w-full border-b-2 border-blue-400 pb-2 text-white outline-none placeholder-gray-400"
                 placeholder={t("todo.placeholder")}
               />
             </div>
